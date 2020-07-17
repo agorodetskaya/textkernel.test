@@ -1,0 +1,56 @@
+---
+parser: babel-eslint
+
+extends: [
+  "eslint:recommended",
+  "plugin:react/recommended"
+]
+
+settings:
+  react:
+    version: "detect"
+  import/ignore: "node_modules"
+  import/resolver:
+    webpack:
+      config: "webpack.development.config.js"
+    node:
+      moduleDirectory:
+        - "node_modules"
+        - "./src"
+
+globals:
+  arguments: true
+  Promise: true
+
+env:
+  browser: true
+  jest/globals: true
+
+plugins: ["react", "import", "sort-destructure-keys", "jest"]
+
+parserOptions:
+  ecmaVersion: 11
+  sourceType": "module"
+
+rules:
+  strict: error
+  max-len: [error, { code: 120 }]
+  indent: [error, 2, { "SwitchCase": 1 }]
+  semi: [error, always]
+  no-multiple-empty-lines: [error, { max: 1 }]
+  no-param-reassign: [error, { props: false }]
+  no-trailing-spaces: [error, { skipBlankLines: true }]
+  sort-keys: error
+  sort-destructure-keys/sort-destructure-keys: error
+  react/jsx-sort-props: [error, { reservedFirst: false }]
+  react/no-array-index-key: error
+  no-unused-vars: error
+  react/no-unused-prop-types: error
+  import/order: [
+    error,
+    {
+      groups: [builtin, external, [parent, sibling], index],
+      newlines-between: always
+    }
+  ]
+  no-console: warn
