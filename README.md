@@ -1,7 +1,7 @@
 # Textkernel SPA test task
 This application shows real-time stocks price and chart for specific date range. You can select multiple stocks to compare their price.
 
-## Requirments
+## Requirements
 - **Node**: > 12.x
 - **npm**: > 6.x
 - Basic knowledge about React, Redux and Material UI :)
@@ -31,7 +31,7 @@ Inside `textkernel.test` package run
 npm start
 ```
 
-## Prodaction build
+## Production build
 Inside `textkernel.test` package run 
 ```bash
 npm build
