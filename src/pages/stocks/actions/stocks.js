@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import {
   ERROR_RECEIVE_ALL_STOCKS,
   ERROR_RECEIVE_PRICE,
@@ -10,32 +8,14 @@ import {
 
 import config from 'config';
 
-const ALL_STOCKS_STORAGE_ID = 'ALL_STOCKS_STORAGE_ID';
 const DEFAULT_HEADERS = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
 };
 
 export const fetchAllStocks =
-  () => dispatch => {
-    const storedData = localStorage.getItem(ALL_STOCKS_STORAGE_ID);
-    if (storedData) {
-      const stocksData = JSON.parse(storedData);
-      if (
-        moment.unix(stocksData.expirationDate).isAfter(moment())
-        && stocksData.payload?.length
-      ) {
-        dispatch({
-          stocks: stocksData.payload,
-          type: RECEIVE_ALL_STOCKS,
-        });
-        return Promise.resolve();
-      } else {
-        localStorage.removeItem(ALL_STOCKS_STORAGE_ID);
-      }
-    }
-    
-    return fetch(
+  () => dispatch =>
+    fetch(
       `${config.BASE_URL}/stocks?apikey=${config.API_KEY}`,
       {
         headers: DEFAULT_HEADERS,
@@ -48,22 +28,14 @@ export const fetchAllStocks =
               throw new Error(`${response.status}: ${error.message}`);
             });
         }
-      
+        
         return response.json();
       })
       .then(response => {
         if (response.status === 'error') {
           return Promise.reject(`${response.code}: ${response.message}`);
         }
-  
-        localStorage.setItem(
-          ALL_STOCKS_STORAGE_ID,
-          JSON.stringify({
-            expirationDate: moment().add(3, 'hour').unix(),
-            payload: response.data,
-          }),
-        );
-      
+        
         return dispatch({
           stocks: response.data,
           type: RECEIVE_ALL_STOCKS,
@@ -73,7 +45,6 @@ export const fetchAllStocks =
         apiError: error.message || error,
         type: ERROR_RECEIVE_ALL_STOCKS,
       }));
-  };
 
 export const fetchPrice = ({
   stocks,

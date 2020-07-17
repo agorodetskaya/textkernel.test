@@ -20,6 +20,9 @@ const SEARCHING_DELAY = 400;
 
 const styles = {
   actions: {
+    flex: 1,
+  },
+  actionsGroup: {
     padding: '8px 20px',
   },
 };
@@ -199,7 +202,7 @@ class StocksSelector extends React.Component {
           <DialogActions>
             <Grid
               alignItems="center"
-              className={classes.actions}
+              className={classes.actionsGroup}
               container
               justify="space-between"
               spacing={1}
@@ -211,8 +214,8 @@ class StocksSelector extends React.Component {
                   </Typography>
                 )}
               </Grid>
-              <Grid item>
-                <Grid container justify="flex-end" spacing={3}>
+              <Grid className={classes.actions} item>
+                <Grid container direction="row" justify="flex-end" spacing={3}>
                   <Grid item>
                     <Button
                       color="default"
